@@ -1,0 +1,20 @@
+:root {
+    /* Cores — extraídas do logo */
+    --navy-deep: #07134a;
+    --navy-mid: #061b7d;
+    --navy-dark: #020b32;
+    --panel: #020817;
+    --cyan: #21b8ff;
+    --blue-mid: #176cff;
+    --blue-deep: #1029ff;
+    --silver: #f5f7ff;
+    --silver-muted: rgba(245, 247, 255, 0.75);
+
+    /* Gradiente de marca, usado em bordas/CTAs */
+    --brand-gradient: linear-gradient(135deg, var(--cyan), var(--blue-mid), var(--blue-deep));
+    --bg-gradient: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 50%, var(--navy-dark) 100%);
+
+    /* Tipografia */
+    --font-display: "Fraunces", serif;
+    --font-body: "Work Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+}
