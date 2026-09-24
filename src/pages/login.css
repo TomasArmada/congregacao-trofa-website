@@ -1,0 +1,256 @@
+/*
+  login.css
+  Estilo da página de login alinhado ao visual da Home
+  (fundo em gradiente navy, glows animados, grelha subtil,
+  cartão em vidro com borda em gradiente da marca).
+
+  Como usar:
+  1. Importa este ficheiro no teu Login.jsx (ou no global).
+  2. Troca a div wrapper de:
+       <div className="min-h-[80vh] flex items-center justify-center px-6 py-16">
+     para:
+       <div className="login">
+         <div className="login__field">
+           <div className="login__glow login__glow--a" />
+           <div className="login__glow login__glow--b" />
+           <div className="login__grid" />
+         </div>
+         <div className="login__content">
+           <div className="login__card"> ... conteúdo atual do form ... </div>
+         </div>
+       </div>
+  3. As variáveis --surface, --border, --accent, --text, etc. já usadas
+     no Login.jsx via style={{ ... }} são definidas abaixo, dentro de
+     .login, por isso o resto do JSX não precisa de mudar.
+*/
+
+.login {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--bg-gradient);
+    color: var(--silver);
+    padding: 2.5rem 1.5rem;
+
+    /* Paleta semântica usada pelo formulário, mapeada aos tokens da marca */
+    --bg: var(--navy-dark);
+    --surface: rgba(245, 247, 255, 0.045);
+    --border: rgba(245, 247, 255, 0.12);
+    --border-strong: rgba(245, 247, 255, 0.22);
+    --accent: var(--cyan);
+    --accent-soft: rgba(33, 184, 255, 0.14);
+    --accent-text: var(--navy-dark);
+    --text: var(--silver);
+    --text-soft: var(--silver-muted);
+    --danger: #ff6b81;
+}
+
+/* Fundo animado — igual ao da Home */
+.login__field {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.login__glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.4;
+    will-change: transform;
+}
+
+.login__glow--a {
+    width: 42vw;
+    height: 42vw;
+    top: -14%;
+    left: -10%;
+    background: radial-gradient(circle, var(--cyan), transparent 70%);
+    animation: login-drift-a 26s ease-in-out infinite;
+}
+
+.login__glow--b {
+    width: 36vw;
+    height: 36vw;
+    bottom: -16%;
+    right: -8%;
+    background: radial-gradient(circle, var(--blue-deep), transparent 70%);
+    animation: login-drift-b 32s ease-in-out infinite;
+}
+
+.login__grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+            to right,
+            rgba(245, 247, 255, 0.035) 1px,
+            transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(245, 247, 255, 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at center, black 45%, transparent 85%);
+}
+
+@keyframes login-drift-a {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(6vw, 8vh) scale(1.12); }
+}
+
+@keyframes login-drift-b {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-5vw, -6vh) scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .login__glow {
+        animation: none;
+    }
+}
+
+/* Conteúdo */
+.login__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.login__card {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    max-width: 28rem;
+    padding: 2rem;
+    border-radius: 1rem;
+    background: var(--panel);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 24px 60px rgba(2, 8, 23, 0.45);
+}
+
+/* Borda em gradiente da marca, mesma técnica do home__cta */
+.login__card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: var(--brand-gradient);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+.login__title {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--text);
+}
+
+.login__subtitle {
+    margin: 0 0 2rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-soft);
+}
+
+.login__error {
+    margin: 0 0 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--danger);
+}
+
+/* Badge do ícone — quadrado fixo, nunca esticado */
+.login__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.65rem;
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+/* Formulário — sempre em coluna, um input por linha */
+.login__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.login__input {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login__input::placeholder {
+    color: var(--text-soft);
+}
+
+.login__input:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.login__submit {
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.8rem 1.25rem;
+    border: none;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-text);
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.login__submit:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.login__submit:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(33, 184, 255, 0.25);
+}
+
+.login__footer {
+    margin: 1.5rem 0 0;
+    font-size: 0.875rem;
+    text-align: center;
+    color: var(--text-soft);
+}
+
+.login__footer a {
+    color: var(--accent);
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+/* Foco consistente com o CTA da Home */
+.login :is(input, button):focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 2px;
+}

@@ -1,7 +1,7 @@
 // src/App.jsx
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-/*import SetPassword from './pages/SetPassword'*/
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from "./pages/Home.jsx";
+import Login from "./pages/Login.jsx";
 
 function App() {
   return (
@@ -9,6 +9,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           {/*<Route path="/auth/set-password" element={<SetPassword />} />*/}
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
   )
