@@ -33,15 +33,24 @@ export default function Login() {
             .from("profiles")
             .select("approved")
             .eq("id", data.user.id)
-            .single();
+            .maybeSingle();
 
-        setLoading(false);
+        // Uma conta atribuída pela administração ainda não tem perfil até o
+        // utilizador definir a sua palavra-passe pela primeira vez.
+        if (!profile) {
+            setLoading(false);
+            navigate("/alterar-palavra-passe", { replace: true });
+            return;
+        }
 
-        if (profileError || !profile) {
+        if (profileError) {
+            setLoading(false);
             setError("Não foi possível verificar a conta. Tenta novamente.");
             await supabase.auth.signOut();
             return;
         }
+
+        setLoading(false);
 
         if (!profile.approved) {
             setError("A tua conta ainda não foi aprovada por um administrador.");
@@ -49,7 +58,7 @@ export default function Login() {
             return;
         }
 
-        navigate("/");
+        navigate("/funcionalidades", { replace: true });
     }
 
     return (
@@ -92,10 +101,6 @@ export default function Login() {
                             {loading ? "A entrar..." : "Entrar"}
                         </button>
                     </form>
-
-                    <p className="login__footer">
-                        Ainda não tens conta? <NavLink to="/criar-conta">Cria uma</NavLink>
-                    </p>
                 </div>
             </div>
         </div>
