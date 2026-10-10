@@ -1,5 +1,6 @@
 // import { Link } from "react-router-dom";
 import "./home.css";
+import {Link} from "react-router-dom";
 
 export default function Home() {
     return (
@@ -30,14 +31,14 @@ export default function Home() {
                 </p>
 
                 {/*Descomentar, quando o login estiver implementado.
-                Apenas vai assim nesta versão, pq vai ser puxado para o main
+                Apenas vai assim nesta versão, pq vai ser puxado para o main*/}
                 <Link to="/login" className="home__cta">
                     Entrar
-                </Link>*/}
+                </Link>
 
                 {/*Pop-up temporário*/}
 
-                <button
+                {/*<button
                     type="button"
                     className="home__cta"
                     onClick={() =>
@@ -47,7 +48,7 @@ export default function Home() {
                     }
                 >
                     Entrar
-                </button>
+                </button>*/}
             </main>
         </div>
     );
